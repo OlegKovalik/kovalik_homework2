@@ -4,4 +4,6 @@
     <string name="settingsName">Settings</string>
     <string name="appButton">APP</string>
     <string name="title_activity_new_app">NewAppActivity</string>
+    <integer name="gridColumnCount">3</integer>
+    <integer name="gridRowCount">4</integer>
 </resources>
