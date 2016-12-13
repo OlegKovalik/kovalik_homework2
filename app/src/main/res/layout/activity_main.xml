@@ -46,14 +46,17 @@
 
     </LinearLayout>
 
-    <GridLayout
-            xmlns:grid="http://schemas.android.com/apk/com.example.kovalik_homework2"
+    <android.support.v7.widget.GridLayout
+            xmlns:grid="http://schemas.android.com/apk/res-auto"
             android:id="@+id/grid_layuot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/bottom_layout"
             android:background="@android:color/darker_gray"
-            android:columnCount="@integer/gridColumnCount">
-    </GridLayout>
+            grid:columnCount="@integer/gridColumnCount"
+            grid:rowCount="@integer/gridRowCount">
+
+
+    </android.support.v7.widget.GridLayout>
 
 </RelativeLayout>

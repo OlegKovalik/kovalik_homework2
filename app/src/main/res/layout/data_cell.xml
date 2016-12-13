@@ -2,16 +2,16 @@
 
 <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:grid="http://schemas.android.com/apk/res-auto"
         android:id="@+id/data_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_columnWeight="1"
-        android:layout_rowWeight="1"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dataButtonMargin"
         android:background="@android:color/white"
-        android:text="@string/cellName"
-/>
+        android:gravity="center"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        android:text="@string/cellName">
+</TextView>
 
 

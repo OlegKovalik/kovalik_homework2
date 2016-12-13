@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
+//import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.support.v7.widget.GridLayout;
 
 import static android.view.View.inflate;
 
@@ -19,6 +20,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ImageButton dialButton = (ImageButton) findViewById(R.id.dial_button);
         ImageButton smsButton = (ImageButton) findViewById(R.id.sms_button);
         Button appButton = (Button) findViewById(R.id.app_button);
@@ -37,26 +39,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         final GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layuot);
 
         for (int i = 0; i < getResources().getInteger(R.integer.gridColumnCount) * getResources().getInteger(R.integer.gridRowCount); i++) {
-            View v = inflate(this, R.layout.data_cell, null);
-            GridLayout.LayoutParams params = (GridLayout.LayoutParams) new GridLayout.LayoutParams();
-            params.width = 200;
-            params.height = 200;
-            v.setLayoutParams(params);
-            gridLayout.addView(v);
+            View v = inflate(this, R.layout.data_cell, gridLayout);
         }
-
-        gridLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
-                int width = (view.getWidth()) / getResources().getInteger(R.integer.gridColumnCount);
-                int height = (view.getHeight()) / getResources().getInteger(R.integer.gridRowCount);
-                int margin = (int) getResources().getDimension(R.dimen.dataButtonMargin);
-                for (int j = 0; j < getResources().getInteger(R.integer.gridColumnCount) * getResources().getInteger(R.integer.gridRowCount); j++) {
-                    gridLayout.getChildAt(j).layout(width * (j % getResources().getInteger(R.integer.gridColumnCount)) + margin, height * (j / getResources().getInteger(R.integer.gridColumnCount)) + margin,
-                            width * ((j % getResources().getInteger(R.integer.gridColumnCount) + 1)) - margin, height * ((j / getResources().getInteger(R.integer.gridColumnCount) + 1)) - margin);
-                }
-            }
-        });
     }
 
     @Override
