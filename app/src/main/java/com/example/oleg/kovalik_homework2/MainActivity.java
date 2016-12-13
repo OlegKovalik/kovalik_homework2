@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         final GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layuot);
 
         for (int i = 0; i < getResources().getInteger(R.integer.gridColumnCount) * getResources().getInteger(R.integer.gridRowCount); i++) {
-            View v = inflate(this, R.layout.data_cell, gridLayout);
+            inflate(this, R.layout.data_cell, gridLayout);
         }
     }
 
