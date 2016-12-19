@@ -4,14 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayout;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-//import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.support.v7.widget.GridLayout;
 
 import static android.view.View.inflate;
+
+//import android.widget.GridLayout;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -29,6 +30,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         smsButton.setOnClickListener(this);
         appButton.setOnClickListener(this);
 
+
         showData();
 
 
@@ -36,10 +38,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void showData() {
 
-        final GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layuot);
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layuot);
 
         for (int i = 0; i < getResources().getInteger(R.integer.gridColumnCount) * getResources().getInteger(R.integer.gridRowCount); i++) {
-            inflate(this, R.layout.data_cell, gridLayout);
+             inflate(this, R.layout.data_cell, gridLayout);
+
         }
     }
 

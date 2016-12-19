@@ -5,4 +5,7 @@
     <dimen name="bottomButtonMargin">2dp</dimen>
     <dimen name="dataButtonMargin">5dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_item_height">100dp</dimen>
+    <dimen name="app_item_margin">2dp</dimen>
+    <dimen name="app_item_padding">2dp</dimen>
 </resources>
