@@ -92,13 +92,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.text.setText(appList.get(position).loadLabel(pm).toString());
         holder.image.setImageDrawable(appList.get(position).loadIcon(pm));
-        holder.text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startApp(appList.get(position));
-            }
-        });
-        holder.image.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startApp(appList.get(position));
