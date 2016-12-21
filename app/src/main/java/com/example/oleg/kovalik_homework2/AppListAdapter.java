@@ -1,7 +1,5 @@
 package com.example.oleg.kovalik_homework2;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,8 +23,8 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     private List<ApplicationInfo> appList;
     private ArrayList<ApplicationInfo> filteredList;
     private List<ApplicationInfo> originalList = new ArrayList<>();
-    Context context;
-
+    private int layoutId;
+    private OnAppItemClickListener onAppItemClickListener;
     private ListFilter filter = new ListFilter();
 
 
@@ -72,40 +70,35 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
 
-    public AppListAdapter(Context context, PackageManager pm, List<ApplicationInfo> appList) {
-        this.context = context;
+    public AppListAdapter(PackageManager pm, List<ApplicationInfo> appList, OnAppItemClickListener onAppItemClickListener) {
         this.appList = appList;
         this.pm = pm;
         originalList = new ArrayList<>(appList);
         filteredList = new ArrayList<>();
+        this.onAppItemClickListener = onAppItemClickListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.app_item, parent, false);
+                .inflate(layoutId, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+
         holder.text.setText(appList.get(position).loadLabel(pm).toString());
         holder.image.setImageDrawable(appList.get(position).loadIcon(pm));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startApp(appList.get(position));
+                onAppItemClickListener.onAppItemClick(appList.get(position));
             }
         });
     }
 
-    public void startApp(ApplicationInfo appInfo) {
-        Intent launchIntent = pm.getLaunchIntentForPackage(appInfo.packageName);
-        if (launchIntent != null) {
-            context.startActivity(launchIntent);
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -119,4 +112,9 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
 
+    public void setLayoutId(int layoutId) {
+        this.layoutId = layoutId;
+
+
+    }
 }

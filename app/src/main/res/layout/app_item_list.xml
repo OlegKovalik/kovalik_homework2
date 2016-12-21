@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/app_item_height"
-              android:orientation="vertical">
+              android:layout_height="@dimen/app_item_height_list"
+              android:orientation="horizontal">
     <ImageView
             android:id="@+id/app_item_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
+            android:layout_gravity="left|center_vertical"
             android:layout_margin="@dimen/app_item_margin"/>
 
     <TextView
             android:id="@+id/app_item_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom|center_horizontal"
-            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_vertical"
             android:padding="@dimen/app_item_padding"/>
 
 </LinearLayout>

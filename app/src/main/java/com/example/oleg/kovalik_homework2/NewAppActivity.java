@@ -1,5 +1,6 @@
 package com.example.oleg.kovalik_homework2;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class NewAppActivity extends AppCompatActivity {
     private RecyclerView appRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private Filter filter;
+    private AppListAdapter appListAdapter;
 
     private static final String TAG = "Test";
 
@@ -29,15 +31,26 @@ public class NewAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_app);
 
+        final PackageManager pm = this.getPackageManager();
+        List<ApplicationInfo> appList = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
+
+        OnAppItemClickListener onAppItemClickListener = new OnAppItemClickListener() {
+            @Override
+            public void onAppItemClick(ApplicationInfo applicationInfo) {
+                Intent launchIntent = pm.getLaunchIntentForPackage(applicationInfo.packageName);
+                if (launchIntent != null) {
+                    startActivity(launchIntent);
+                }
+            }
+        };
+
+        appListAdapter = new AppListAdapter(pm, appList, onAppItemClickListener);
         appRecyclerView = (RecyclerView) findViewById(R.id.app_view);
         appRecyclerView.setHasFixedSize(true);
         onClickList(null);
 
-        PackageManager pm = this.getPackageManager();
-        List<ApplicationInfo> appList = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
-        AppListAdapter appListAdapter = new AppListAdapter(this, pm, appList);
         filter = appListAdapter.getFilter();
         appRecyclerView.setAdapter(appListAdapter);
 
@@ -62,11 +75,6 @@ public class NewAppActivity extends AppCompatActivity {
         });
 
 
-//        Intent launchIntent = pm.getLaunchIntentForPackage(appList.get(0).packageName);
-//        if (launchIntent != null) {
-//            startActivity(launchIntent);
-//        }
-
     }
 
     TextWatcher textWatcher = new TextWatcher() {
@@ -88,12 +96,21 @@ public class NewAppActivity extends AppCompatActivity {
 
 
     public void onClickGrid(View view) {
+        appListAdapter.setLayoutId(R.layout.app_item_grid);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
         appRecyclerView.setLayoutManager(layoutManager);
+        appRecyclerView.getRecycledViewPool().clear();
+
+
     }
 
     public void onClickList(View view) {
+        appListAdapter.setLayoutId(R.layout.app_item_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         appRecyclerView.setLayoutManager(layoutManager);
+        appRecyclerView.getRecycledViewPool().clear();
+
     }
+
+
 }
