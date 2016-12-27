@@ -3,6 +3,10 @@
               android:layout_width="match_parent"
               android:layout_height="@dimen/app_item_height_list"
               android:orientation="horizontal">
+    <CheckBox
+            style="@style/app_on_top_checkbox_all"
+            android:id="@+id/app_on_top"/>
+
     <ImageView
             android:id="@+id/app_item_image"
             android:layout_width="wrap_content"
