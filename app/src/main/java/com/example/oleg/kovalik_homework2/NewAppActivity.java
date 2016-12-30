@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Filter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class NewAppActivity extends BaseActivity {
@@ -26,7 +25,7 @@ public class NewAppActivity extends BaseActivity {
     private AppListAdapter appListAdapter;
     private PackageManager pm;
     private List<AppData> appList;
-    HashSet<String> appOnTop = new HashSet<>();
+    private String[] appOnTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +47,12 @@ public class NewAppActivity extends BaseActivity {
         OnCheckClickListener onCheckClickListener = new OnCheckClickListener() {
             @Override
             public void addAppOnTop(AppData appData) {
-                appOnTop.add(appData.getAppPackage());
-                getSaveManager().saveAppOnTop(appOnTop);
-
+                appOnTop = getSaveManager().addNewApp(appOnTop, appData.getAppPackage().toString());
             }
 
             @Override
             public void removeAppOnTop(AppData appData) {
-                appOnTop.remove(appData.getAppPackage());
-                getSaveManager().saveAppOnTop(appOnTop);
+                appOnTop = getSaveManager().removeApp(appOnTop, appData.getAppPackage().toString());
             }
         };
 
@@ -99,12 +95,14 @@ public class NewAppActivity extends BaseActivity {
         appList = new ArrayList<>();
         pm = this.getPackageManager();
         List<ApplicationInfo> applicationInfoList = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+
         for (ApplicationInfo applicationInfo : applicationInfoList) {
             appList.add(new AppData(applicationInfo.loadLabel(pm).toString(), applicationInfo.loadIcon(pm), applicationInfo.packageName));
-            appList.get(appList.size() - 1).setAppOnTop(appOnTop.contains(appList.get(appList.size() - 1).getAppPackage()));
+            appList.get(appList.size() - 1).setAppOnTop(getSaveManager().isAppOnTop(appOnTop, appList.get(appList.size() - 1).getAppPackage()));
         }
 
-        AppData.setAppOnTopCount(appOnTop.size());
+
+        AppData.setAppOnTopCount(getSaveManager().getCount(appOnTop));
     }
 
     TextWatcher textWatcher = new TextWatcher() {

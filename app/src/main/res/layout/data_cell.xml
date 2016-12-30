@@ -12,21 +12,29 @@
               grid:layout_columnWeight="1"
               grid:layout_rowWeight="1"
               android:orientation="vertical">
-    <ImageView
-            android:id="@+id/app_on_top_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/app_item_margin"/>
+    <LinearLayout android:id="@+id/app_container"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_margin="@dimen/app_item_margin"
+                  android:background="@android:color/white"
+                  android:gravity="center"
+                  android:orientation="vertical">
+        <ImageView
+                android:id="@+id/app_on_top_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/app_item_margin"/>
 
-    <TextView
-            android:id="@+id/app_on_top_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom|center_horizontal"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/app_item_padding"
-            android:text="Add App"/>
+        <TextView
+                android:id="@+id/app_on_top_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/app_item_padding"
+                android:text="Add App"/>
+    </LinearLayout>
 </LinearLayout>
 
 
