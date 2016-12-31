@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             ((ViewHolderCell) view.getTag()).viewHolderItem.container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (appOnTop[((ViewHolderCell) view.getTag()).id] != getResources().getString(R.string.cellName)) {
+                    if (!appOnTop[((ViewHolderCell) view.getTag()).id].equals(getResources().getString(R.string.cellName))) {
                         startApp(appOnTop[((ViewHolderCell) view.getTag()).id]);
                     }
                 }
