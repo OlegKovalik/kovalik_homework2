@@ -7,4 +7,5 @@
     <string name="del_text">Delete</string>
     <integer name="gridColumnCount">3</integer>
     <integer name="gridRowCount">4</integer>
+    <integer name="defaultMaxAppOnTop">12</integer>
 </resources>

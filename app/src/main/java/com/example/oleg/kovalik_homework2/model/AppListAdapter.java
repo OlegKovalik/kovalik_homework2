@@ -1,11 +1,14 @@
-package com.example.oleg.kovalik_homework2;
+package com.example.oleg.kovalik_homework2.model;
 
-import android.content.pm.PackageManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.example.oleg.kovalik_homework2.AppManager;
+import com.example.oleg.kovalik_homework2.R;
+import com.example.oleg.kovalik_homework2.listeners.listapp.OnAppCheckClickListener;
+import com.example.oleg.kovalik_homework2.listeners.listapp.OnAppItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +18,13 @@ import java.util.List;
  */
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> implements Filterable {
 
-    PackageManager pm;
+
     private List<AppData> appList;
     private ArrayList<AppData> filteredList;
     private List<AppData> originalList = new ArrayList<>();
     private int layoutId;
-    private OnAppItemClickListener onAppItemClickListener;
     private ListFilter filter = new ListFilter();
-    private boolean appOnTopFull = false;
-    private int maxOnTop;
-    private OnCheckClickListener onCheckClickListener;
+    AppManager appManager;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,15 +72,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
 
-    public AppListAdapter(List<AppData> appList, int maxOnTop, OnAppItemClickListener onAppItemClickListener, OnCheckClickListener onCheckClickListener) {
-        this.appList = appList;
-        this.pm = pm;
+    public AppListAdapter(AppManager appManager) {
+        this.appManager = appManager;
+        appManager.initAppList();
+        this.appList = appManager.getAppList();
         originalList = new ArrayList<>(appList);
         filteredList = new ArrayList<>();
-        this.onAppItemClickListener = onAppItemClickListener;
-        this.onCheckClickListener = onCheckClickListener;
-        this.maxOnTop = maxOnTop;
-        this.appOnTopFull = (AppData.getAppOnTopCount() >= maxOnTop);
     }
 
     @Override
@@ -94,53 +91,16 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-
         holder.text.setText(appList.get(position).getAppName());
         holder.image.setImageDrawable(appList.get(position).getAppIcon());
         holder.appOnTop.setChecked(appList.get(position).isAppOnTop());
-        if (appOnTopFull) {
+        if (appManager.isAppOnTopFull()) {
             holder.appOnTop.setEnabled(holder.appOnTop.isChecked());
         } else {
             holder.appOnTop.setEnabled(true);
         }
-        holder.appOnTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (holder.appOnTop.isChecked()) {
-                    AppData.increaseOnTopCount();
-                    appList.get(position).setAppOnTop(true);
-                    onCheckClickListener.addAppOnTop(appList.get(position));
-                    Toast.makeText(view.getContext(), "Application '" + appList.get(position).getAppName() + "' added to favourited", Toast.LENGTH_SHORT).show();
-
-                    if (AppData.getAppOnTopCount() == maxOnTop) {
-                        appOnTopFull = true;
-                        notifyDataSetChanged();
-                        Toast.makeText(view.getContext(), "Main Activity is full", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    if (AppData.getAppOnTopCount() == maxOnTop) {
-                        appOnTopFull = false;
-                        notifyDataSetChanged();
-                    }
-                    AppData.decreaseOnTopCount();
-                    appList.get(position).setAppOnTop(false);
-                    onCheckClickListener.removeAppOnTop(appList.get(position));
-                    Toast.makeText(view.getContext(), "Application '" + appList.get(position).getAppName() + "' remove from favourited", Toast.LENGTH_SHORT).show();
-                }
-
-
-                System.out.println(AppData.getAppOnTopCount());
-            }
-        });
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAppItemClickListener.onAppItemClick(appList.get(position).getAppPackage());
-            }
-        });
-
+        holder.appOnTop.setOnClickListener(new OnAppCheckClickListener(appManager, this, position));
+        holder.itemView.setOnClickListener(new OnAppItemClickListener(appManager, position));
     }
 
 

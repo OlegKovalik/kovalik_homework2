@@ -7,15 +7,22 @@ import android.app.Application;
  */
 public class CustomApplication extends Application {
     private SaveManager saveManager;
+    private AppManager appManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         saveManager = new SaveManager(this);
+        appManager = new AppManager(this);
+
     }
 
     public SaveManager getSaveManager() {
         return saveManager;
+    }
+
+    public AppManager getAppManager() {
+        return appManager;
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.oleg.kovalik_homework2;
+package com.example.oleg.kovalik_homework2.model;
 
 import android.graphics.drawable.Drawable;
 
@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
  * Created by Oleg on 25.12.2016.
  */
 public class AppData {
-    private static int appOnTopCount = 0;
 
     private String appName;
     private Drawable appIcon;
@@ -52,22 +51,6 @@ public class AppData {
 
     public void setAppOnTop(boolean appOnTop) {
         this.appOnTop = appOnTop;
-    }
-
-    public static int getAppOnTopCount() {
-        return appOnTopCount;
-    }
-
-    public static void setAppOnTopCount(int appOnTopCount) {
-        AppData.appOnTopCount = appOnTopCount;
-    }
-
-    public static void increaseOnTopCount() {
-        appOnTopCount++;
-    }
-
-    public static void decreaseOnTopCount() {
-        appOnTopCount--;
     }
 
 
